@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_QR" targetNamespace="https://example.invalid/horeca-qr">
+  <bpmn:process id="RecipeProcess" name="Запрос рецепта" isExecutable="false">
+    <bpmn:laneSet id="LaneSet">
+      <bpmn:lane id="Guest" name="Гость">
+        <bpmn:flowNodeRef>Start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Request</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Receive</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="System" name="Система">
+        <bpmn:flowNodeRef>SaveRequest</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Notify</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SaveRecipe</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Deliver</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Master" name="Мастер">
+        <bpmn:flowNodeRef>Prepare</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Start" />
+    <bpmn:userTask id="Request" name="Запросить рецепт" />
+    <bpmn:serviceTask id="SaveRequest" name="Сохранить запрос" />
+    <bpmn:serviceTask id="Notify" name="Уведомить мастера" />
+    <bpmn:userTask id="Prepare" name="Подготовить и сохранить рецепт" />
+    <bpmn:serviceTask id="SaveRecipe" name="Записать рецепт" />
+    <bpmn:serviceTask id="Deliver" name="Обновить гостевой экран" />
+    <bpmn:userTask id="Receive" name="Открыть рецепт" />
+    <bpmn:endEvent id="End" />
+    <bpmn:sequenceFlow id="Flow1" sourceRef="Start" targetRef="Request" />
+    <bpmn:sequenceFlow id="Flow2" sourceRef="Request" targetRef="SaveRequest" />
+    <bpmn:sequenceFlow id="Flow3" sourceRef="SaveRequest" targetRef="Notify" />
+    <bpmn:sequenceFlow id="Flow4" sourceRef="Notify" targetRef="Prepare" />
+    <bpmn:sequenceFlow id="Flow5" sourceRef="Prepare" targetRef="SaveRecipe" />
+    <bpmn:sequenceFlow id="Flow6" sourceRef="SaveRecipe" targetRef="Deliver" />
+    <bpmn:sequenceFlow id="Flow7" sourceRef="Deliver" targetRef="Receive" />
+    <bpmn:sequenceFlow id="Flow8" sourceRef="Receive" targetRef="End" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram">
+    <bpmndi:BPMNPlane id="Plane" bpmnElement="RecipeProcess">
+      <bpmndi:BPMNShape id="Shape_Guest" bpmnElement="Guest" isHorizontal="true"><dc:Bounds x="40" y="15" width="1330" height="130" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_System" bpmnElement="System" isHorizontal="true"><dc:Bounds x="40" y="145" width="1330" height="130" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Master" bpmnElement="Master" isHorizontal="true"><dc:Bounds x="40" y="275" width="1330" height="130" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Start" bpmnElement="Start"><dc:Bounds x="100" y="62" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Request" bpmnElement="Request"><dc:Bounds x="165" y="40" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_SaveRequest" bpmnElement="SaveRequest"><dc:Bounds x="325" y="170" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Notify" bpmnElement="Notify"><dc:Bounds x="480" y="170" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Prepare" bpmnElement="Prepare"><dc:Bounds x="635" y="300" width="140" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_SaveRecipe" bpmnElement="SaveRecipe"><dc:Bounds x="810" y="170" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Deliver" bpmnElement="Deliver"><dc:Bounds x="965" y="170" width="140" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Receive" bpmnElement="Receive"><dc:Bounds x="1140" y="40" width="120" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End" bpmnElement="End"><dc:Bounds x="1300" y="62" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge1" bpmnElement="Flow1"><di:waypoint x="136" y="80" /><di:waypoint x="165" y="80" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge2" bpmnElement="Flow2"><di:waypoint x="285" y="80" /><di:waypoint x="305" y="80" /><di:waypoint x="305" y="210" /><di:waypoint x="325" y="210" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge3" bpmnElement="Flow3"><di:waypoint x="445" y="210" /><di:waypoint x="480" y="210" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge4" bpmnElement="Flow4"><di:waypoint x="600" y="210" /><di:waypoint x="617.5" y="210" /><di:waypoint x="617.5" y="340" /><di:waypoint x="635" y="340" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge5" bpmnElement="Flow5"><di:waypoint x="775" y="340" /><di:waypoint x="792.5" y="340" /><di:waypoint x="792.5" y="210" /><di:waypoint x="810" y="210" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge6" bpmnElement="Flow6"><di:waypoint x="930" y="210" /><di:waypoint x="965" y="210" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge7" bpmnElement="Flow7"><di:waypoint x="1105" y="210" /><di:waypoint x="1122.5" y="210" /><di:waypoint x="1122.5" y="80" /><di:waypoint x="1140" y="80" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge8" bpmnElement="Flow8"><di:waypoint x="1260" y="80" /><di:waypoint x="1300" y="80" /></bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

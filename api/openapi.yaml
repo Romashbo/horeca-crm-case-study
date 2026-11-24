@@ -1,0 +1,88 @@
+openapi: 3.0.3
+info:
+  title: HoReCa QR public contract sample
+  version: 1.0.0
+  description: Reconstructed partial API, not runtime verified.
+servers:
+  - url: https://example.invalid/api
+paths:
+  /sessions:
+    post:
+      summary: Create a session
+      security:
+        - masterSession: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [deviceId, strength, ingredients]
+              properties:
+                deviceId: {type: string}
+                strength: {type: string, description: Five supported UI values}
+                ingredients:
+                  type: array
+                  minItems: 1
+                  items:
+                    type: object
+                    properties:
+                      name: {type: string}
+                      category: {type: string}
+                      emoji: {type: string}
+                description: {type: string, nullable: true}
+                mixNotes: {type: string, nullable: true}
+                tableNumber: {type: string, nullable: true}
+      responses:
+        '201':
+          description: Session created
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/Session'}
+        '400': {description: Missing required fields}
+        '401': {description: Unauthorized}
+  /devices/{id}/active:
+    get:
+      summary: Retrieve current session for QR device
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200':
+          description: Current session or null
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  session:
+                    type: object
+                    nullable: true
+                    description: Session including device information
+                  device:
+                    type: object
+                    nullable: true
+                  deviceId: {type: string}
+components:
+  securitySchemes:
+    masterSession:
+      type: apiKey
+      in: cookie
+      name: master_session
+      description: Illustrative cookie name for public documentation, not exact production identifier.
+  schemas:
+    Session:
+      type: object
+      properties:
+        id: {type: string}
+        deviceId: {type: string}
+        strength: {type: string}
+        ingredients:
+          type: array
+          items: {type: object}
+        isActive: {type: boolean}
+        isPending: {type: boolean}
+        mixRequested: {type: boolean}
+        masterCalled: {type: boolean}
